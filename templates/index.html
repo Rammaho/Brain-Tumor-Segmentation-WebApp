@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Segmentation</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Brain Tumor Segmentation</h1>
+    <p>
+        Upload a brain MRI slice (PNG or JPEG) and the system will segment
+        tumor regions using a U‑Net‑based model with Atrous Spatial
+        Pyramid Pooling and squeeze–excitation blocks inspired by the
+        Bridged‑U‑Net‑ASPP‑EVO architecture【133007765279740†L314-L331】.
+    </p>
+    <form class="upload-form" action="/predict" method="post" enctype="multipart/form-data">
+        <label for="file">Select MRI image:</label>
+        <input type="file" id="file" name="file" accept=".png,.jpg,.jpeg" required>
+        <button type="submit">Segment Tumor</button>
+    </form>
+
+    {% if result_image %}
+    <div class="result">
+        <h2>Segmentation Result</h2>
+        <img src="{{ url_for('static', path=result_image) }}" alt="Segmentation result" class="result-image">
+    </div>
+    {% endif %}
+
+    <div class="examples">
+        <h2>Example Results</h2>
+        <div class="example-grid">
+            <div class="example-item">
+                <img src="{{ url_for('static', path='images/example1.png') }}" alt="Example 1">
+                <span>Example 1</span>
+            </div>
+            <div class="example-item">
+                <img src="{{ url_for('static', path='images/example2.png') }}" alt="Example 2">
+                <span>Example 2</span>
+            </div>
+            <div class="example-item">
+                <img src="{{ url_for('static', path='images/example3.png') }}" alt="Example 3">
+                <span>Example 3</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Based on the work of Yousef et al. (2023)【133007765279740†L314-L331】. This demo uses a simplified version of their Bridged‑U‑Net‑ASPP‑EVO model to illustrate brain tumor segmentation.</p>
+    </footer>
+</div>
+</body>
+</html>
